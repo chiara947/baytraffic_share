@@ -10,14 +10,14 @@ import sys
 # Load OSM data as downloaded from overpass
 #osm_dir = '~/osm-project/overpass'
 #osm_data = json.load(open(os.path.expanduser(osm_dir+'/target.osm')))
-osm_data = json.load(open('target.osm'))
+osm_data = json.load(open('target_turin.osm'))
 osm_data = osm_data['elements']
 print('length of the OSM data: ', len(osm_data))
 
 # Based on the OSM data, make nodes_dict = {'osm_node_id':(lat,lon), ...}
 nodes_dict = {str(n['id']): (n['lat'], n['lon']) for n in osm_data if n['type']=='node'}
 print('it includes {} nodes'.format(len(nodes_dict)))
-print('example node: ', nodes_dict['26117861'])
+#print('example node: ', nodes_dict['26117861'])
 
 # Make links_dict = {'osm_way_id':[list_of_points_on_the_link], ...}
 way_elements = [w_e for w_e in osm_data if w_e['type']=='way']
@@ -44,8 +44,8 @@ for l in way_elements_twoway_default:
 
 #links_dict = {str(l['id']): list(map(str, l['nodes'])) for l in osm_data if (l['type']=='way') and (re.search(pattern_drivable, l['tags']['highway']))}
 print('and {} links'.format(len(links_dict)))
-print('example link: ', links_dict['12437582'])
-print('example link: ', links_dict['12437582r'])
+#print('example link: ', links_dict['12437582'])
+#print('example link: ', links_dict['12437582r'])
 # Default one-ways: motorway, motorway_link, trunk, trunk_link, junction
 
 # Reformat links_dict into a convenient format for assigning travel time
@@ -71,14 +71,14 @@ for l_key, l_value in links_dict.items():
     links_dict[l_key]['tag_type'] = link_type_dict[l_key]
 
 print('\n An example of reformatted link:')
-pprint.pprint(links_dict['8915500'])
+#pprint.pprint(links_dict['8915500'])
 print(len(nodes_dict), len(nodes_in_links))
 #print(type(next(iter(nodes_in_links))))
 
-#with open('data_repo/nodes.json', 'w') as nodes_outfile:
+with open('data_repo/nodes_turin.json', 'w') as nodes_outfile:
 #	json.dump(nodes_dict, nodes_outfile, indent=2)
 
-#with open('data_repo/tagged_alloneway_links.json', 'w') as links_outfile:
+with open('data_repo/tagged_alloneway_links_turin.json', 'w') as links_outfile:
 #	json.dump(links_dict, links_outfile, indent=2)
 
 #nodes_in_links_dict = {n: nodes_dict[n] for n in nodes_in_links}
